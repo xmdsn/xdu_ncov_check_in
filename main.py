@@ -123,7 +123,7 @@ def main_handler(event, context):
     login(session, student_id, password)
     message = submit(session)
 
-    message = get_hour_message() + '检-' + message
+    message = '疫情通丨' + message
 
     server_jiang_push(SCKEY, message)
 
