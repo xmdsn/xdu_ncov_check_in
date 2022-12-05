@@ -15,7 +15,7 @@ def main(stu_id: str, passwd: str, seckey: str = typer.Option(None, help="Server
         server_jiang_push(seckey, message)
     else:
         print(message)
-
+    
 
 if __name__ == "__main__":
     typer.run(main)

@@ -1,3 +1,4 @@
+import os
 import requests
 import json
 import time
@@ -48,43 +49,11 @@ def submit(session):
         'Referer': 'https://xxcapp.xidian.edu.cn/ncov/wap/default/index',
         'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
     }
-
-    data = {
-        'szgjcs': '',
-        'szcs': '',
-        'szgj': '',
-        'zgfxdq': '0',
-        'mjry': '0',
-        'csmjry': '0',
-        'tw': '2',
-        'sfcxtz': '0',
-        'sfjcbh': '0',
-        'sfcxzysx': '0',
-        'qksm': '',
-        'sfyyjc': '0',
-        'jcjgqr': '0',
-        'remark': '',
-        'address': '陕西省西安市长安区兴隆街道内环北路西安电子科技大学长安校区',
-        'geo_api_info': '{"type":"complete","position":{"Q":34.124816351997,"R":108.83649576823001,"lng":108.836496,"lat":34.124816},"location_type":"html5","message":"Get ipLocation failed.Get geolocation success.Convert Success.Get address success.","accuracy":126,"isConverted":true,"status":1,"addressComponent":{"citycode":"029","adcode":"610116","businessAreas":[],"neighborhoodType":"","neighborhood":"","building":"","buildingType":"","street":"雷甘路","streetNumber":"264号","country":"中国","province":"陕西省","city":"西安市","district":"长安区","township":"兴隆街道"},"formattedAddress":"陕西省西安市长安区兴隆街道内环北路西安电子科技大学长安校区","roads":[],"crosses":[],"pois":[],"info":"SUCCESS"}',
-        'area': '陕西省 西安市 长安区',
-        'province': '陕西省',
-        'city': '西安市',
-        'sfzx': '1',
-        'sfjcwhry': '0',
-        'sfjchbry': '0',
-        'sfcyglq': '0',
-        'gllx': '',
-        'glksrq': '',
-        'jcbhlx': '',
-        'jcbhrq': '',
-        'ismoved': '0',
-        'bztcyy': '',
-        'sftjhb': '0',
-        'sftjwh': '0',
-        'sfjcjwry': '0',
-        'jcjg': ''
-    }
-
+    data = {}
+    if tmp := os.getenv('LOCATION_INFO'):
+        data = json.loads(tmp)
+    else:
+        raise Exception("请在环境变量中设置LOCATION_INFO")
     response = session.post('https://xxcapp.xidian.edu.cn/ncov/wap/default/save',
                             headers=headers, data=data)
 
